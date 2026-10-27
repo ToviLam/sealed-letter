@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A letter that stays closed</title>
+  <meta name="description" content="A design study by Tovi Lam. A letter stays closed until two trusted people agree, and they still do not read it.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,620&family=Outfit:wght@340;480;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%238c3a3a'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='%23f3efe6' stroke-width='1.5'/%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="top">
+    <p class="mark">Design study</p>
+    <p class="by">Tovi Lam</p>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">A public sketch</p>
+      <h1>A letter that stays closed.</h1>
+      <p class="lede">Someone writes a sentence they are not ready to have read. Two people they trust have to agree before it opens. Those two people still never read it.</p>
+    </section>
+
+    <section class="beats" aria-label="The idea">
+      <article>
+        <span>01</span>
+        <h2>Write it now</h2>
+        <p>The words belong to the writer, and to the person they are for. Not to the people who will later decide the moment.</p>
+      </article>
+      <article>
+        <span>02</span>
+        <h2>Two people agree</h2>
+        <p>One agreement is not enough. The letter stays shut until a second person stands with the first.</p>
+      </article>
+      <article>
+        <span>03</span>
+        <h2>Someone else reads</h2>
+        <p>When the time has come, the letter opens for the person it was meant for. The carriers of the decision are not the audience.</p>
+      </article>
+    </section>
+
+    <section class="studio" aria-labelledby="studio-title">
+      <div class="studio-copy">
+        <h2 id="studio-title">Try the seal</h2>
+        <p>This stays in your browser. Nothing is saved, and nothing is sent.</p>
+        <ol>
+          <li>Write one sentence.</li>
+          <li>Name two people.</li>
+          <li>Let both of them agree.</li>
+        </ol>
+      </div>
+
+      <div class="desk">
+        <form id="compose" class="panel">
+          <label for="sentence">The sentence</label>
+          <textarea id="sentence" name="sentence" rows="4" maxlength="240" required placeholder="If I could leave you one sentence…"></textarea>
+          <div class="pair">
+            <div>
+              <label for="person-a">First person</label>
+              <input id="person-a" name="personA" maxlength="24" required placeholder="First name" autocomplete="off">
+            </div>
+            <div>
+              <label for="person-b">Second person</label>
+              <input id="person-b" name="personB" maxlength="24" required placeholder="First name" autocomplete="off">
+            </div>
+          </div>
+          <p id="form-note" class="note" role="status"></p>
+          <button type="submit">Seal it</button>
+        </form>
+
+        <div id="sealed" class="panel sealed" hidden>
+          <div class="letter" id="letter">
+            <div class="wax" aria-hidden="true"></div>
+            <p class="waiting" id="waiting">Still sealed.</p>
+            <p class="opened-for" id="opened-for" hidden>For the person it was written for</p>
+            <blockquote id="revealed" hidden></blockquote>
+          </div>
+          <div class="agreements" id="agreements"></div>
+          <button type="button" id="again" class="quiet">Write another</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="close">
+      <p>This page is the shareable sketch. The working product is private, and it is not in this repository.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Tovi Lam · Hong Kong · 2026</p>
+  </footer>
+  <script src="sketch.js"></script>
+</body>
+</html>
