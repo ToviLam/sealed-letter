@@ -98,16 +98,3 @@ document.querySelectorAll(".phase-tab").forEach((tab) => {
 });
 
 show("epitaph");
-
-const form = document.querySelector("#note-form");
-const pinned = document.querySelector("#pinned");
-
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const data = new FormData(form);
-  const line = String(data.get("line") || "").trim();
-  if (!line) return;
-  document.querySelector("#pinned-kind").textContent = data.get("kind");
-  document.querySelector("#pinned-line").textContent = line;
-  pinned.hidden = false;
-});
