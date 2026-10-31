@@ -1,28 +1,22 @@
-# A letter that stays closed
+# MyEpitaph
 
-A public design study by Tovi Lam.
+A public map by Tovi Lam. The private product stays private.
 
-Some words are written long before anyone should read them. This study asks a simple question: who gets to decide that the time has come, and who still does not get to read the words?
+One side is for the subscriber. The other side, later, is for businesses after a death. This page does not include the product, customer records, prices, or how private things are locked.
 
-**Open the sketch:** https://tovilam.github.io/sealed-letter/
+**The page:** https://tovilam.github.io/sealed-letter/
 
-## What you can try
+## For the subscriber
 
-1. Write one sentence.
-2. Name two people.
-3. Have both of them agree.
-4. The letter opens for the person it was written for. The two people do not read it.
+- **Your Epitaphs.** A letter for someone you name. The person who carries out a task does not read it.
+- **Asset registry.** Register a digital or physical item first. Delegation comes after.
+- **Vault & chores.** Those items, and the tasks you give to one designated person.
+- **Final wishes.** One-time wishes, such as a funeral arrangement.
+- **Casket designer.** Design the casket on screen.
+- **Still speaking.** Messages that continue, in words, audio, video, or an avatar you prepared. Not built yet.
 
-Nothing you type is saved or sent. Refreshing the page clears it.
+## Not for subscribers
 
-## The judgment behind it
-
-- Writing a letter and deciding when it may be read are different jobs.
-- One person deciding alone is not enough.
-- The people who carry that decision are not the audience for the letter.
-
-## What this repository is not
-
-This is a shareable sketch for the idea. It is not the product, the source code, or the private system. Those stay private.
+An after-death business network, not built yet: funeral home, casket provider, cemetery, restaurant, cake shop, flower shop.
 
 Hong Kong, 2026.

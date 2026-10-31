@@ -1,93 +1,113 @@
-const form = document.querySelector("#compose");
-const note = document.querySelector("#form-note");
-const sealed = document.querySelector("#sealed");
-const letter = document.querySelector("#letter");
-const waiting = document.querySelector("#waiting");
-const openedFor = document.querySelector("#opened-for");
-const revealed = document.querySelector("#revealed");
-const agreements = document.querySelector("#agreements");
-const again = document.querySelector("#again");
+const phases = {
+  epitaph: {
+    status: "For the subscriber",
+    name: "Your Epitaphs",
+    text: "A letter for someone you name. The person who carries out a task does not read it.",
+    points: [
+      "Last words, written for one person.",
+      "A task for someone else does not open the letter."
+    ]
+  },
+  assets: {
+    status: "For the subscriber",
+    name: "Asset registry",
+    text: "Register a digital or physical item first. Delegation comes after, not here.",
+    points: [
+      "A digital item, such as an account or a file.",
+      "A physical item, such as a key, a box, or a keepsake.",
+      "This is the list. It is not yet a task for someone."
+    ]
+  },
+  vault: {
+    status: "For the subscriber",
+    name: "Vault & chores",
+    text: "The items, and the tasks you give to one designated person.",
+    points: [
+      "A physical or digital item, once you are ready to hand it on.",
+      "A task for one person you name. Feed the cat. Close an account.",
+      "That person does the task. They do not read the letter."
+    ]
+  },
+  wishes: {
+    status: "For the subscriber",
+    name: "Final wishes",
+    text: "Wishes that happen once. This is still the subscriber, writing down what they want.",
+    points: [
+      "A funeral arrangement.",
+      "The other one-time instructions around that farewell."
+    ]
+  },
+  casket: {
+    status: "For the subscriber",
+    name: "Casket designer",
+    text: "Design the casket on screen. Having it made belongs with the businesses, later.",
+    points: [
+      "Shape and look, decided by the subscriber.",
+      "A casket provider would make it in a later phase."
+    ]
+  },
+  speaking: {
+    status: "For the subscriber · not built yet",
+    name: "Still speaking",
+    text: "Messages that continue, on days you choose, in a form you decided.",
+    points: [
+      "Words, audio, or video.",
+      "Written ahead of time, or shaped with AI.",
+      "An avatar: a face and a voice you prepared."
+    ]
+  },
+  network: {
+    status: "Not for subscribers · not built yet",
+    name: "After-death businesses",
+    text: "A network for the businesses that carry out a death. The subscriber does not use this side.",
+    points: [
+      "A funeral home.",
+      "A casket provider.",
+      "A cemetery.",
+      "A restaurant.",
+      "A cake shop.",
+      "A flower shop."
+    ]
+  }
+};
 
-const agreed = { a: false, b: false };
-let people = { a: "", b: "" };
-let sentence = "";
+const cardText = document.querySelector("#phase-text");
+const cardName = document.querySelector("#phase-name");
+const cardStatus = document.querySelector("#phase-status");
+const cardPoints = document.querySelector("#phase-points");
+
+function show(key) {
+  const phase = phases[key];
+  cardStatus.textContent = phase.status;
+  cardName.textContent = phase.name;
+  cardText.textContent = phase.text;
+  cardPoints.replaceChildren(...phase.points.map((item) => {
+    const li = document.createElement("li");
+    li.textContent = item;
+    return li;
+  }));
+  document.querySelectorAll(".phase-tab").forEach((tab) => {
+    const on = tab.dataset.phase === key;
+    tab.classList.toggle("is-on", on);
+    tab.setAttribute("aria-selected", on ? "true" : "false");
+  });
+}
+
+document.querySelectorAll(".phase-tab").forEach((tab) => {
+  tab.addEventListener("click", () => show(tab.dataset.phase));
+});
+
+show("epitaph");
+
+const form = document.querySelector("#note-form");
+const pinned = document.querySelector("#pinned");
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   const data = new FormData(form);
-  sentence = String(data.get("sentence") || "").trim();
-  people = {
-    a: String(data.get("personA") || "").trim(),
-    b: String(data.get("personB") || "").trim(),
-  };
-
-  if (sentence.length < 2) {
-    note.textContent = "Write a sentence first.";
-    return;
-  }
-  if (people.a.toLowerCase() === people.b.toLowerCase()) {
-    note.textContent = "Choose two different people.";
-    return;
-  }
-
-  note.textContent = "";
-  agreed.a = false;
-  agreed.b = false;
-  form.hidden = true;
-  sealed.hidden = false;
-  render();
+  const line = String(data.get("line") || "").trim();
+  if (!line) return;
+  document.querySelector("#pinned-kind").textContent = data.get("kind");
+  document.querySelector("#pinned-line").textContent = line;
+  pinned.hidden = false;
 });
-
-agreements.addEventListener("click", (event) => {
-  const button = event.target.closest("button[data-person]");
-  if (!button || agreed[button.dataset.person]) return;
-  agreed[button.dataset.person] = true;
-  render();
-});
-
-again.addEventListener("click", () => {
-  sentence = "";
-  people = { a: "", b: "" };
-  agreed.a = false;
-  agreed.b = false;
-  form.reset();
-  sealed.hidden = true;
-  form.hidden = false;
-  letter.classList.remove("open");
-  document.querySelector("#sentence").focus();
-});
-
-function render() {
-  const count = Number(agreed.a) + Number(agreed.b);
-  agreements.innerHTML = ["a", "b"].map((key) => {
-    const name = people[key];
-    const done = agreed[key];
-    return `<div class="person${done ? " agreed" : ""}">
-      <strong>${escapeHtml(name)}</strong>
-      <button type="button" data-person="${key}" ${done ? "disabled" : ""}>${done ? "Agreed" : "Agree"}</button>
-    </div>`;
-  }).join("");
-
-  if (count < 2) {
-    letter.classList.remove("open");
-    waiting.hidden = false;
-    waiting.textContent = count === 0 ? "Still sealed." : "Still sealed. One agreement is not enough.";
-    openedFor.hidden = true;
-    revealed.hidden = true;
-    return;
-  }
-
-  letter.classList.add("open");
-  waiting.hidden = true;
-  openedFor.hidden = false;
-  revealed.hidden = false;
-  revealed.textContent = sentence;
-}
-
-function escapeHtml(value) {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
-}
